@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
+
 </head>
 <body>
 
-<script src="js/jquery.js";></script>
-<script src="js/bootstrap.js"></script>
 
 <script type="text/javascript">
     function HttpRequest()
@@ -16,22 +14,57 @@
         var test = 'GET HTTP:\/\/charity.cs.uwlax.edu\/a\/b?c=d&e=f#ghi HTTP\/1.1\nHost: charity.cs.uwlax.edu\nConnection: keep-alive\nPragma: no-cache\nCache-Control: no-cache\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/55.0.2883.95 Safari\/537.36\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\nAccept-Encoding: gzip, deflate, sdch\nAccept-Language: en-US,en;q=0.8,nb;q=0.6\n\nThis is the body';
         var arr=test.split("\n");
         alert(test);
-       // var test1=test.indexOf("asdgah");  // search
-       var requestObj=new Object();
-       var queryObj=new Object();
-      var headersObj=new Object();
+        var requestObj=new Object();
+        var queryObj=new Object();
+        var headersObj=new Object();
+        var arr1=new Array("Connection","Pragma","Cache-Control","Upgrade-Insecure-Requests","User-Agent","Accept","Accept-Encoding","Accept-Language","Host");
+        for(var x=0;x<arr1.length;x++)        // Search words arr
+        {
+
+            requestObj.obj="Null";
+            console.log(arr1[x]);
+            for(var i=0;i<arr.length;i++)     // request arr
+            {
+                if(arr[i].indexOf(arr1[x])!=-1)
+                {
+                    var colP=arr[i].indexOf(":");
+                    var subString=arr[i].substring(colP);
+                    requestObj.obj=subString;
+                }
+
+
+            }
+
+        }
+
+        // var test1=test.indexOf("asdgah");  // search
+
         requestObj.query=queryObj;
         requestObj.headers=headersObj;
-
-       queryObj.c="d";
+        queryObj.c="d";
         queryObj.e="f";
 
         var str = JSON.stringify(requestObj);
+
         console.log(str);
         console.log(test1);
     }
 
-    HttpRequest();
+    function HttpRequest1() {
+
+        var arr1=new Array("Connection","Pragma","Cache-Control","Upgrade-Insecure-Requests","User-Agent","Accept","Accept-Encoding","Accept-Language","Host");
+        var requestObj=new Object();
+
+        requestObj[arr1[0]]="1";
+        var str = JSON.stringify(requestObj);
+
+        console.log(str);
+
+    }
+
+    HttpRequest1();
+
+
 </script>
 
 </body>
