@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Title</title>
-
 </head>
 <body>
-
-
 <script type="text/javascript">
     function HttpRequest()
     {
@@ -18,54 +15,81 @@
         var queryObj=new Object();
         var headersObj=new Object();
         var arr1=new Array("Connection","Pragma","Cache-Control","Upgrade-Insecure-Requests","User-Agent","Accept","Accept-Encoding","Accept-Language","Host");
-        for(var x=0;x<arr1.length;x++)        // Search words arr
+        for(var x=0;x<arr1.length;x++)         // headers
         {
 
-            requestObj.obj="Null";
-            console.log(arr1[x]);
-            for(var i=0;i<arr.length;i++)     // request arr
+            headersObj[arr1[x]]=null;
+
+            for(var i=0;i<arr.length;i++)
             {
                 if(arr[i].indexOf(arr1[x])!=-1)
                 {
                     var colP=arr[i].indexOf(":");
-                    var subString=arr[i].substring(colP);
-                    requestObj.obj=subString;
+                    var subString=arr[i].substring(colP+1);
+                    headersObj[arr1[x]]=subString;
                 }
-
-
             }
 
         }
 
-        // var test1=test.indexOf("asdgah");  // search
-
-        requestObj.query=queryObj;
+        if(arr[0].indexOf("?")!=-1)
+        {
+            var queryP=arr[0].indexOf("?");
+            var subQuery;
+            var arrQ
+            if(arr[0].indexOf("#")==-1)
+            {
+               subQuery=arr[0].substring(queryP+1);
+            }
+           else{
+                subQuery=arr[0].substring(queryP+1,arr[0].indexOf("#"));
+            }
+            arrQ=subQuery.split("&");
+            for(var x=0;x<arrQ.length;x++)
+            {
+              var arrE= arrQ[x].split("=");
+              queryObj[arrE[0]]=arrE[1];
+            }
+        }
+        else {
+            queryObj=null;
+        }
         requestObj.headers=headersObj;
-        queryObj.c="d";
-        queryObj.e="f";
+        requestObj.query=queryObj;
+        requestObj.body=arr[arr.length-1];
+        requestObj.method=arr[0].split(" ")[0];
+        var tempstr=arr[0].substring(arr[0].indexOf("//")+2);
+        var pathstr=tempstr.substring(tempstr.indexOf("/"),tempstr.indexOf("?"));
+        requestObj.path=pathstr;
+        var urlstr=tempstr.substring(tempstr.indexOf("/"),tempstr.indexOf(" "));
+        requestObj.url=urlstr;
+        var versionstr=tempstr.substring(tempstr.indexOf(" "));
+        requestObj.version=versionstr;
+        requestObj.fragment=tempstr.substring(tempstr.indexOf("#"),tempstr.indexOf(" "));
+        requestObj.host=tempstr.substring(0,tempstr.indexOf("/"));
 
+        if(tempstr.indexOf(":")==-1)   //keyi ceshi yixia
+       {
+           requestObj.port="80"
+       }
+       else{
+           requestObj.port=tempstr.substring(tempstr.indexOf(":"),tempstr.indexOf("/"));
+       }
+       requestObj.protocol=versionstr.substring(0,versionstr.indexOf("/"));
         var str = JSON.stringify(requestObj);
 
         console.log(str);
-        console.log(test1);
     }
+    HttpRequest();
+//test();
+    function test() {
 
-    function HttpRequest1() {
-
-        var arr1=new Array("Connection","Pragma","Cache-Control","Upgrade-Insecure-Requests","User-Agent","Accept","Accept-Encoding","Accept-Language","Host");
-        var requestObj=new Object();
-
-        requestObj[arr1[0]]="1";
-        var str = JSON.stringify(requestObj);
-
-        console.log(str);
+      var str="123414";
+      var arr=str.split("%");
+      alert(arr);
 
     }
-
-    HttpRequest1();
-
 
 </script>
-
 </body>
 </html>
