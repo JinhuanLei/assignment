@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+
+<script src="js/jquery.js";></script>
+<script src="js/bootstrap.js"></script>
+
+<script type="text/javascript">
+    function HttpRequest()
+    {
+        var test = 'GET HTTP:\/\/charity.cs.uwlax.edu\/a\/b?c=d&e=f#ghi HTTP\/1.1\nHost: charity.cs.uwlax.edu\nConnection: keep-alive\nPragma: no-cache\nCache-Control: no-cache\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/55.0.2883.95 Safari\/537.36\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\nAccept-Encoding: gzip, deflate, sdch\nAccept-Language: en-US,en;q=0.8,nb;q=0.6\n\nThis is the body';
+        var arr=test.split("\n");
+        alert(test);
+       // var test1=test.indexOf("asdgah");  // search
+       var requestObj=new Object();
+       var queryObj=new Object();
+      var headersObj=new Object();
+        requestObj.query=queryObj;
+        requestObj.headers=headersObj;
+
+       queryObj.c="d";
+        queryObj.e="f";
+
+        var str = JSON.stringify(requestObj);
+        console.log(str);
+        console.log(test1);
+    }
+
+    HttpRequest();
+</script>
+
+</body>
+</html>
