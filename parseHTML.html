@@ -5,89 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<script type="text/javascript">
-
-
-    function validateUrl(requestLine)
-    {
-
-        var methodarr=new Array("GET","POST","HEAD","PUT","DELETE","OPTIONS","CONNECT","TRACE");
-        var arr=requestLine.split(" ");
-        for(var x=0;x<methodarr.length;x++)
-        {
-
-        }
-        var reg = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
-        alert(reg.test(arr[1]));
-    }
-
-    function HttpRequest(url)
-    {
-
-        var arr=url.split("\n");
-        validateUrl(arr[0]);
-       var requestObj=new Object();
-       var queryObj=new Object();
-       var headersObj=new Object();
-       for(var i=1;i<arr.length;i++){
-           if(arr[i].indexOf(":")!=-1){
-               var temparr=arr[i].split(":");
-               headersObj[temparr[0]]=temparr[1];
-           }
-          }
-            if(arr[0].indexOf("?")!=-1){
-            var queryP=arr[0].indexOf("?");
-            var subQuery;
-            var arrQ
-            if(arr[0].indexOf("#")==-1){
-               subQuery=arr[0].substring(queryP+1);
-            }
-           else{
-                subQuery=arr[0].substring(queryP+1,arr[0].indexOf("#"));
-            }
-            arrQ=subQuery.split("&");
-            for(var x=0;x<arrQ.length;x++){
-              var arrE= arrQ[x].split("=");
-              queryObj[arrE[0]]=arrE[1];
-            }
-        }else {
-            queryObj="";
-        }
-
-
-        requestObj.headers=headersObj;
-        requestObj.query=queryObj;
-        requestObj.body=arr[arr.length-1];
-        requestObj.method=arr[0].split(" ")[0];
-        var tempstr=arr[0].substring(arr[0].indexOf("//")+2);
-        var pathstr=tempstr.substring(tempstr.indexOf("/"),tempstr.indexOf("?"));
-        requestObj.path=pathstr;
-        var urlstr=tempstr.substring(tempstr.indexOf("/"),tempstr.indexOf(" "));
-        requestObj.url=urlstr;
-        var versionstr=tempstr.substring(tempstr.indexOf(" "));
-        requestObj.version=versionstr;
-        if(tempstr.indexOf("#")!=-1){
-            requestObj.fragment=tempstr.substring(tempstr.indexOf("#")+1,tempstr.indexOf(" "));
-        }else{
-            requestObj.fragment="";
-        }
-        requestObj.host=tempstr.substring(0,tempstr.indexOf("/"));
-
-        if(tempstr.indexOf(":")==-1){
-           requestObj.port="80"
-       }else{
-           requestObj.port=tempstr.substring(tempstr.indexOf(":"),tempstr.indexOf("/"));
-       }
-        requestObj.protocol=versionstr.substring(0,versionstr.indexOf("/"));
-        var str = JSON.stringify(requestObj);
-        alert(str);
-        return requestObj;
-    }
-    var test = 'GET HTTP:\/\/charity.cs.uwlax.edu\/a\/b HTTP\/1.1\nHost: charity.cs.uwlax.edu\nConnection: keep-alive\nPragma: no-cache\nCache-Control: no-cache\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/55.0.2883.95 Safari\/537.36\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\nAccept-Encoding: gzip, deflate, sdch\nAccept-Language: en-US,en;q=0.8,nb;q=0.6\n\nThis is the body';
-var test1="GET HTTP://charity.cs.uwlax.edu/a/b HTTP/1.1";
-    //alert(test);
-    HttpRequest(test1);
-
+<script type="text/javascript" src="HttpRequest.js"></script>
+<script>
+     var test = 'GET HTTP:\/\/charity.cs.uwlax.edu\/a\/b HTTP\/1.1\nHost: charity.cs.uwlax.edu\nConnection: keep-alive\nPragma: no-cache\nCache-Control: no-cache\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/55.0.2883.95 Safari\/537.36\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\nAccept-Encoding: gzip, deflate, sdch\nAccept-Language: en-US,en;q=0.8,nb;q=0.6\n\nThis is the body';
+     var test1="GET HTTP://charity.cs.uwlax.edu/a/b HTTP/1.1";
+    // //alert(test);
+    // HttpRequest(test1);
+    var x=HttpRequest(test);
+     alert(JSON.stringify(x));
 </script>
 </body>
 </html>
